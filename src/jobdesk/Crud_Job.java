@@ -41,8 +41,11 @@ public class Crud_Job extends DBkoneksi {
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    
     public static String usm = "";
     public static String psm = "";
+    public static String mem="";
+    
     String[] titles = new String[]{"No", "Job Description", "Pic", "Request", "Target", "Finish", "Priorty Number", "Remark/Status", "Aprove", "Status Selesai", "Date Creation","Job Num"};
     public DefaultTableModel model = new DefaultTableModel(titles, 0) {
         public boolean isCellEditable(int row, int column) {
@@ -294,11 +297,12 @@ public class Crud_Job extends DBkoneksi {
         while (resultSet.next()) {
 
             psm = resultSet.getString("xcd");
-
+            mem= resultSet.getString("position");
+            
             System.out.println(psm);
         }
 
-        if (!psm.isEmpty()) {
+        if (!psm.isEmpty() && mem.equals("mem")) {
 
             usm = pl;
 
@@ -372,30 +376,61 @@ public class Crud_Job extends DBkoneksi {
 
     }
 
-    public void DelRec(String tgl) throws SQLException {
+    public void DelRec(String jobnum) throws SQLException {
 
-        preparedStatement = connect.prepareStatement("delete from " + job_helper.TB_NAME + " where " + job_helper.KEY_DATE_CREATION + "=?");
+        preparedStatement = connect.prepareStatement("delete from " + job_helper.TB_NAME + " where " + job_helper.KEY_JOB_NUM + "=?");
 
-        preparedStatement.setString(1, tgl);
+        preparedStatement.setString(1, jobnum);
 
         preparedStatement.execute();
 
 
     }
 
-    public void DelRecAll(String tgl) throws SQLException {
+    public void DelRecAll(String tgl,String username) throws SQLException {
 
+       if(CekDataSelesai(tgl,username)>0){ 
+          JOptionPane.showMessageDialog(null, "Data Tidak bisa di hapus semua karena ada data yang sudah selesai! ");
+       }
+       else{
         preparedStatement = connect.prepareStatement("delete from " + job_helper.TB_NAME
-                + " where " + job_helper.KEY_DATE_CREATION + " like ?");
+                + " where " + job_helper.KEY_DATE_CREATION + " like ? and "+job_helper.KEY_USERNAME+"=?");
 
         preparedStatement.setString(1, "%" + tgl + "%");
-
-
+        preparedStatement.setString(2, username);
+        
         preparedStatement.execute();
-
+       }
 
     }
 
+     public int CekDataSelesai(String tgl,String username) throws SQLException {
+
+           preparedStatement = connect.prepareStatement("select ifnull(count(jobactive.status_selesai), 0) AS sudahselesai from " + job_helper.TB_NAME
+                + " where " + job_helper.KEY_STAT_SELESAI + "='ok' and jobactive.username<>'root' and "+job_helper.KEY_DATE_CREATION+" like ? and "+ job_helper.KEY_USERNAME+"=?");
+        
+        
+        preparedStatement.setString(1, "%" + tgl + "%");
+        preparedStatement.setString(2, username);
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+
+        int i = 0;
+
+        
+        while (resultSet.next()) {
+
+            
+           i = resultSet.getInt(v_result_helper.KEY_SELESAI);
+
+        }
+           
+
+         return i;
+    }
+    
+    
     public void CetakAll(String username) throws JRException {
 
         Map map = new HashMap();

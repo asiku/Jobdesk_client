@@ -34,6 +34,10 @@ public class frm_job_mon extends javax.swing.JFrame {
     private boolean cedit=false;
     private Date tgledit;
     private String jobnum;
+    private String pic="";
+    private String aprove="";
+    private String selesai="";
+    private String desc="";
     
     /**
      * Creates new form frm_job_mon
@@ -128,6 +132,8 @@ public class frm_job_mon extends javax.swing.JFrame {
         bt_delete = new javax.swing.JButton();
         lbl_user = new javax.swing.JLabel();
         lbl_tgl_cur = new com.toedter.calendar.JDateChooser();
+        txt_pic = new javax.swing.JTextField();
+        dt_req1 = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -194,6 +200,12 @@ public class frm_job_mon extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txt_job_desc);
 
         jLabel2.setText("Pic");
+
+        cmb_pic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_picActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Request");
 
@@ -271,41 +283,55 @@ public class frm_job_mon extends javax.swing.JFrame {
             }
         });
 
+        dt_req1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                dt_req1MouseReleased(evt);
+            }
+        });
+        dt_req1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dt_req1PropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sp_priorty, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmb_pic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dt_req, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dt_target, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))
-                    .addComponent(txt_finish)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(sp_priorty, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmb_pic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_finish)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dt_req, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dt_target, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                .addComponent(dt_req1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))))
+                    .addComponent(txt_pic, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(bt_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bt_batal, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(514, 514, 514))
@@ -338,11 +364,13 @@ public class frm_job_mon extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmb_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(txt_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -354,7 +382,9 @@ public class frm_job_mon extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(dt_target, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dt_req1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_finish, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -367,7 +397,7 @@ public class frm_job_mon extends javax.swing.JFrame {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Job Activities", jPanel1);
@@ -607,7 +637,7 @@ public class frm_job_mon extends javax.swing.JFrame {
              {
                 
                 dat = new Crud_Job();
-                dat.SaveJob(txt_job_desc.getText(), cmb_pic.getSelectedItem().toString(), convertToDate(dt_req.getDate()),
+                dat.SaveJob(txt_job_desc.getText(), txt_pic.getText(), convertToDate(dt_req.getDate()),
                         convertToDate(dt_target.getDate()), txt_finish.getText(), sp_priorty.getValue(), txt_remark.getText(),
                         "no", "no", lbl_user.getText(),convertToDateF(lbl_tgl_cur.getDate()));
 
@@ -620,7 +650,7 @@ public class frm_job_mon extends javax.swing.JFrame {
 //                 dat.updateJobRec(convertToDateE(tgledit),txt_job_desc.getText(), cmb_pic.getSelectedItem().toString(), convertToDate(dt_req.getDate()),
 //                        convertToDate(dt_target.getDate()), txt_finish.getText(), sp_priorty.getValue(), txt_remark.getText());
                 
-                 dat.updateJobRec(jobnum,txt_job_desc.getText(), cmb_pic.getSelectedItem().toString(), convertToDate(dt_req.getDate()),
+                 dat.updateJobRec(jobnum,txt_job_desc.getText(), txt_pic.getText(), convertToDate(dt_req.getDate()),
                         convertToDate(dt_target.getDate()), txt_finish.getText(), sp_priorty.getValue(), txt_remark.getText());
                  
                  refreshtbl();
@@ -712,8 +742,11 @@ private void CekGantiPass(){
                 // No row selected
             } else {
                 popup_mnu.show(jTable1, evt.getX(), evt.getY());
-                idhps = (jTable1.getModel().getValueAt(row, 10).toString());
-                System.out.println(idhps);
+                idhps = (jTable1.getModel().getValueAt(row, 11).toString());
+                aprove= (jTable1.getModel().getValueAt(row, 8).toString());
+                selesai= (jTable1.getModel().getValueAt(row, 9).toString());
+                desc= (jTable1.getModel().getValueAt(row, 1).toString());
+                System.out.println(selesai);
             }
 
         }
@@ -725,16 +758,21 @@ private void CekGantiPass(){
 
     private void mnu_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnu_deleteActionPerformed
         // TODO add your handling code here:
-        int response = JOptionPane.showConfirmDialog(null, "Apakah Akan di hapus Pekerjaan di Tgl " + idhps + " ?", "Konfirmasi",
+        int response = JOptionPane.showConfirmDialog(null, "Apakah Akan di hapus Pekerjaan  " + desc + " ?", "Konfirmasi",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION) {
 
             try {
                 // TODO add your handling code here:
+              if(selesai.equals("no")){  
                 dat = new Crud_Job();
                 dat.DelRec(idhps);
                 refreshtbl();
+              }
+              else{
+               JOptionPane.showMessageDialog(null, "Tidak Bisa dihapus Karena Sudah Selesai!");
+              }
             } catch (Exception ex) {
                 Logger.getLogger(frm_job_mon.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -776,9 +814,12 @@ private void CekGantiPass(){
             if (response == JOptionPane.YES_OPTION) {
                 try {
                     // TODO add your handling code here:
+                    
                     dat = new Crud_Job();
-                    dat.DelRecAll(convertToDateF(lbl_tgl_cur.getDate()));
+                    dat.DelRecAll(convertToDateF(lbl_tgl_cur.getDate()),lbl_user.getText());
                     refreshtbl();
+                 
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(frm_job_mon.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -798,10 +839,12 @@ private void CekGantiPass(){
         } else {
 
             try {
+                
+            if(selesai.equals("no"))    {
                 cedit=true;
                 
                 txt_job_desc.setText(jTable1.getModel().getValueAt(row, 1).toString());
-                cmb_pic.setSelectedItem(jTable1.getModel().getValueAt(row, 2).toString());
+                txt_pic.setText(jTable1.getModel().getValueAt(row, 2).toString());
                 dt_req.setDate(ConvStrToDate(jTable1.getModel().getValueAt(row, 3).toString()));
                 dt_target.setDate(ConvStrToDate(jTable1.getModel().getValueAt(row, 4).toString()));
                 txt_finish.setText(jTable1.getModel().getValueAt(row, 5).toString());
@@ -810,6 +853,10 @@ private void CekGantiPass(){
                 tgledit= convertToDateEx(jTable1.getModel().getValueAt(row, 10).toString()) ;
                 jobnum=jTable1.getModel().getValueAt(row, 11).toString() ;
                 System.out.println("edit tgl: "+tgledit);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Tidak Dapat Di Edit Karena Pekerjaan Tersebut sudah selesai!");
+            }
             } catch (ParseException ex) {
                 Logger.getLogger(frm_job_mon.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -830,7 +877,7 @@ private void CekGantiPass(){
                
                 
                 txt_job_desc.setText(jTable1.getModel().getValueAt(row, 1).toString());
-                cmb_pic.setSelectedItem(jTable1.getModel().getValueAt(row, 2).toString());
+                txt_pic.setText(jTable1.getModel().getValueAt(row, 2).toString());
                 dt_req.setDate(ConvStrToDate(jTable1.getModel().getValueAt(row, 3).toString()));
                 dt_target.setDate(ConvStrToDate(jTable1.getModel().getValueAt(row, 4).toString()));
                 txt_finish.setText(jTable1.getModel().getValueAt(row, 5).toString());
@@ -863,8 +910,11 @@ private void CekGantiPass(){
                 // No row selected
             } else {
                 popup_mnu.show(jTable1, evt.getX(), evt.getY());
-                idhps = (jTable1.getModel().getValueAt(row, 10).toString());
-                System.out.println(idhps);
+                idhps = (jTable1.getModel().getValueAt(row, 11).toString());
+                aprove= (jTable1.getModel().getValueAt(row, 8).toString());
+                selesai= (jTable1.getModel().getValueAt(row, 9).toString());
+                desc= (jTable1.getModel().getValueAt(row, 1).toString());
+                System.out.println("aprove: "+selesai);
             }
 
         }
@@ -989,6 +1039,30 @@ private void CekGantiPass(){
         
         
     }//GEN-LAST:event_bt_cetak_pertglActionPerformed
+
+    private void cmb_picActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_picActionPerformed
+        // TODO add your handling code here:
+        
+        pic=pic+cmb_pic.getSelectedItem().toString()+" ";
+        
+        txt_pic.setText(pic);
+    }//GEN-LAST:event_cmb_picActionPerformed
+
+    private void dt_req1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dt_req1MouseReleased
+        
+    }//GEN-LAST:event_dt_req1MouseReleased
+
+    private void dt_req1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dt_req1PropertyChange
+        // TODO add your handling code here:
+      if(dt_req1.getDate()!=null)  {
+        try {
+            // TODO add your handling code here:
+            txt_finish.setText(convertToDate(dt_req1.getDate()));
+        } catch (ParseException ex) {
+            Logger.getLogger(frm_job_mon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+    }//GEN-LAST:event_dt_req1PropertyChange
 
     private Date ConvStrToDate(String tgl) {
 
@@ -1155,7 +1229,7 @@ private void CekGantiPass(){
 //        }
 //booleatn g=dt_req.getDate().toString().isEmpty();
         if (dt_req.getDate() != null && dt_target.getDate() != null && sp_priorty.getValue() != 0
-                && !txt_job_desc.getText().isEmpty() && !txt_finish.getText().isEmpty()) {
+                && !txt_job_desc.getText().isEmpty() && !txt_finish.getText().isEmpty()&& !txt_pic.getText().isEmpty()) {
             ck = true;
 
         }
@@ -1198,6 +1272,7 @@ private void CekGantiPass(){
     private javax.swing.JComboBox cmb_pic;
     private com.toedter.calendar.JDateChooser dt_cari_creation;
     private com.toedter.calendar.JDateChooser dt_req;
+    private com.toedter.calendar.JDateChooser dt_req1;
     private com.toedter.calendar.JDateChooser dt_target;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1234,6 +1309,7 @@ private void CekGantiPass(){
     private com.toedter.components.JSpinField sp_priorty;
     private javax.swing.JTextField txt_finish;
     private javax.swing.JTextArea txt_job_desc;
+    private javax.swing.JTextField txt_pic;
     private javax.swing.JPasswordField txt_pwd_baru;
     private javax.swing.JPasswordField txt_pwd_lama;
     private javax.swing.JTextArea txt_remark;
