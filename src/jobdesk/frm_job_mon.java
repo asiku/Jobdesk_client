@@ -1121,7 +1121,7 @@ private void CekGantiPass(){
             dat = new Crud_Job();
 
             dat.readRec(convertToDateF(lbl_tgl_cur.getDate()),lbl_user.getText());
-
+            pic="";
         } catch (Exception e2) {
             // TODO Auto-generated catch block
             e2.printStackTrace();
@@ -1252,7 +1252,7 @@ private void CekGantiPass(){
         sp_priorty.setValue(0);
 
         jobnum="";
-        
+        pic="";
         dt_req.setDate(null);
         dt_target.setDate(null);
         txt_job_desc.setText("");
